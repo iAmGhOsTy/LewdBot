@@ -3,6 +3,7 @@ const { Collection } = require("discord.js");
 module.exports = async (client, message) => {
     if(message.author.bot) { return }
     const prefix = client.config.prefix
+
         
     if(message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))){ return message.channel.send(`Hi, I'm ${client.user.username}! In this server, my prefix is \`${prefix}\``) }
     if(!message.content.startsWith(prefix)){ return }
@@ -15,7 +16,7 @@ module.exports = async (client, message) => {
     else if(client.aliases.has(command)) { cmd = client.commands.get(client.aliases.get(command)) }
     if(!cmd) return;
 
-    const props = require(`../command/${cmd.dir}/${cmd.name}`);
+    const props = require(`../command/${cmd.category}/${cmd.name}`);
     
     // COOLDOWNS & ERREUR
     if (!cooldowns.has(props.name)) { cooldowns.set(props.name, new Collection()); }

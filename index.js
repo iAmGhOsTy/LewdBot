@@ -1,9 +1,13 @@
 require('dotenv').config()
-const { Client, Collection,Options } = require("discord.js");
+const { Client, Collection, Options, GatewayIntentBits } = require("discord.js");
 const client = new Client({
     allowedMentions: { parse: ['users', 'roles'] },
     fetchAllMembers: false,
-    intents: 1,
+    intents: [
+		GatewayIntentBits.Guilds,          
+        GatewayIntentBits.GuildMessages,     
+        GatewayIntentBits.GuildMembers,      
+        GatewayIntentBits.MessageContent],
     sweepers: {
 		...Options.DefaultSweeperSettings,
 		messages: {
@@ -19,8 +23,9 @@ const client = new Client({
 
 //SET COLLECTION
 client.commands = new Collection();
-client.slash = new Collection();
+client.slashCommands = new Collection();
 client.aliases = new Collection();
+// client.categories = readdirSync("./commands/");
 cooldowns = new Collection();
 
 //SET UTILS

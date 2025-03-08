@@ -1,4 +1,4 @@
 module.exports = {
-    prefix: '&',
-    owner: [],
+    prefix: '*',
+    owner: ['798245188413816833'],
 };

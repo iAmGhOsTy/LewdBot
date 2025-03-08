@@ -8,7 +8,7 @@ module.exports = async (client) => {
                 if (err) client.logger.error(err);
                 file.forEach(f => {
                     const props = require(`${__dirname}/../../slashCommands/${dir}/${f}`);
-                    client.slash.set(props.name, props);
+                    client.slashCommands.set(props.name, props);
                 });
     
                 client.logger.loader(`${client.color.chalkcolor.red(`${dir}`)} loaded with ${file.length} (/) commands`)

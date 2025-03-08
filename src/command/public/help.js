@@ -1,4 +1,5 @@
-const{EmbedBuilder,codeBlock} = require("discord.js")
+const{EmbedBuilder,codeBlock} = require("discord.js");
+const { prefix } = require("../../../config");
 module.exports = {
     name: 'help',
     description: 'Help command',
@@ -77,15 +78,15 @@ module.exports = {
               });
              return message.channel.send({  embeds: [embed] });
             } else if (query && isCategory) {
-             const commands = client.slash.filter((cmd) => cmd.category.toLowerCase() === query.toLowerCase());
+             const commands = client.slashCommands.filter((cmd) => cmd.category?.toLowerCase() === query?.toLowerCase());
              const embed = new EmbedBuilder()
               .setTitle(` Available \`${query}\` commands \`(${commands.size})\``)
-              .setDescription(`> ${commands.map((cmd) => `\`/${cmd.name}\``).join(", ")}`)
+              .setDescription(`> ${commands.map((cmd) => `\`${prefix}${cmd.name}\``).join(", ")}`)
               //.setColor()
               .setTimestamp()
               .setFooter({
-               text: `Requested by ${interaction.member?.user?.username}`,
-               iconURL: interaction.member.user.displayAvatarURL({
+               text: `Requested by ${message.member?.user?.username}`,
+               iconURL: message.member.user.displayAvatarURL({
                 dynamic: true,
                 format: "png",
                 size: 2048,
@@ -93,17 +94,17 @@ module.exports = {
               });
              return message.channel.send({  embeds: [embed] });
             } else {
-             const categories = [...new Set(client.slash.map((cmd) => cmd.category))];
+             const categories = [...new Set(client.commands.map((cmd) => cmd.category))];
          
 
          
              const embed = new EmbedBuilder()
               .setTitle("❔ Help")
-              .setDescription(`> Use the menu, or use \`/help [category]\`to view commands based on their category!`)
+              .setDescription(`> Use the menu, or use ${prefix}help [category]\`to view commands based on their category!`)
               .addFields(
                categories.map((category) => ({
                 name: ` ${category}`,
-                value: codeBlock(`/help ${category.toLowerCase()}`),
+                value: codeBlock(`${prefix}help ${category?.toLowerCase()}`),
                 inline: true,
                }))
               )
